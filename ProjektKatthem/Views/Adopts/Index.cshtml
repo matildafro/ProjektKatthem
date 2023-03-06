@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ProjektKatthem.Models.Adopt>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AdoptName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pickup)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cats)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdoptName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pickup)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cats.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AdoptId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.AdoptId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.AdoptId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

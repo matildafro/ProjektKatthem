@@ -1,0 +1,54 @@
+﻿@model ProjektKatthem.Models.Cats
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Cats</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Breed)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Breed)
+        </dd>
+        <dt class="col-sm-2">
+            Uploaded Image
+        </dt>
+        <dd class="col-sm-10">
+            <img decoding="async" src="@("~/imagesupload/"+Model.ImgName)" asp-append-version="true" width="200px" height="200px" />
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Adopted)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Adopted)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Registered)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Registered)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
