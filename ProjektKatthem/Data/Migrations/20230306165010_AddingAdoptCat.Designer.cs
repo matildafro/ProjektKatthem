@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjektKatthem.Data;
 
@@ -11,9 +12,11 @@ using ProjektKatthem.Data;
 namespace ProjektKatthem.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230306165010_AddingAdoptCat")]
+    partial class AddingAdoptCat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -235,8 +238,8 @@ namespace ProjektKatthem.Data.Migrations
                     b.Property<string>("AdoptName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("CatsAdopted")
-                        .HasColumnType("bit");
+                    b.Property<string>("CatsAdopted")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CatsId")
                         .HasColumnType("int");
@@ -265,8 +268,8 @@ namespace ProjektKatthem.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool?>("Adopted")
-                        .HasColumnType("bit");
+                    b.Property<string>("Adopted")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Age")
                         .HasColumnType("int");

@@ -48,7 +48,12 @@ namespace ProjektKatthem.Controllers
         // GET: Adopts/Create
         public IActionResult Create()
         {
-            ViewData["CatsId"] = new SelectList(_context.Cats, "Id", "Name");
+            var catContext = _context.Cats.Where(c => c.Adopted == false)
+                .Select(c => c)
+                .ToList();
+
+            ViewData["CatsId"] = new SelectList(catContext, "Id", "Name");
+            
             return View();
         }
 
@@ -61,11 +66,26 @@ namespace ProjektKatthem.Controllers
         {
             if (ModelState.IsValid)
             {
+                //ändrar då adoption bokar katten
+                var adoptCat = from s in _context.Cats
+                               where s.Id == adopt.CatsId
+                               select s;
+
+                foreach (var s in adoptCat)
+                {
+                    s.Adopted = true;
+                }
+
                 _context.Add(adopt);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CatsId"] = new SelectList(_context.Cats, "Id", "Name", adopt.CatsId);
+
+            
+             
+
+            ViewData["CatsId"] = new SelectList(_context.Cats, "Id", "Name"); 
+       
             return View(adopt);
         }
 

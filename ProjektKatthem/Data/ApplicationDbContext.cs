@@ -13,5 +13,9 @@ namespace ProjektKatthem.Data
 
         public DbSet<Cats> Cats { get; set; }
         public DbSet<Adopt> Adopt { get; set; }
+
+       
     }
+
+    
 }
