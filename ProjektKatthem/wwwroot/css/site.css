@@ -6,6 +6,10 @@ html {
     font-family: 'Cabin', sans-serif;
 }
 
+footer {
+    margin-top: 35px;
+}
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
