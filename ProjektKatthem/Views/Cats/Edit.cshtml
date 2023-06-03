@@ -1,41 +1,56 @@
 ﻿@model ProjektKatthem.Models.Cats
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Redigera";
 }
 
-<h1>Edit</h1>
+<div class="infocolor">
+    <h1>Redigera @Model.Name</h1>
+    <a asp-action="Index" class="btn btn-dark">Tillbaka</a> |
+    <a asp-action='Delete' class="btn btn-danger" asp-route-id='@Model.Id'>Radera</a>
+    </div>
 
-<h4>Cats</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+
+<div class="edition">
+
+        
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+
+
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <span asp-validation-for="Name" class="text-danger"></span> 
             </div>
+            <div class="form-group">
+                
+                @Html.RadioButtonFor(m => m.Gender,"True")Hona
+                @Html.RadioButtonFor(m => m.Gender,"False")Hane
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
             <div class="form-group">
                 <label asp-for="Age" class="control-label"></label>
                 <input asp-for="Age" class="form-control" />
-                <span asp-validation-for="Age" class="text-danger"></span>
+                    <span asp-validation-for="Age" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Breed" class="control-label"></label>
                 <input asp-for="Breed" class="form-control" />
-                <span asp-validation-for="Breed" class="text-danger"></span>
+                    <span asp-validation-for="Breed" class="text-danger"></span> 
             </div>
+
             <div class="form-group">
                 <label asp-for="ImgName" class="control-label"></label>
                 <input asp-for="ImgName" class="form-control" />
-                <span asp-validation-for="ImgName" class="text-danger"></span>
+                <span asp-validation-for="ImgName" class="text-danger"></span> 
             </div>
+
             <div class="form-group">
-                <label asp-for="Adopted" class="control-label"></label>
-                <input asp-for="Adopted" class="form-control" />
+                
+                @Html.RadioButtonFor(m => m.Adopted,"True")Bokad
+                @Html.RadioButtonFor(m => m.Adopted,"False")Tillgänglig för adoption
                 <span asp-validation-for="Adopted" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -44,10 +59,20 @@
                 <span asp-validation-for="Registered" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label asp-for="Info" class="control-label"></label><br />
+                <textarea asp-for="Info" cols="70" rows="5">
+                    @Model.Info
+                </textarea>
+                
+                <span asp-validation-for="Info" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+            <input type="submit" value="Spara ändringar" class="btn btn-success" />
             </div>
         </form>
-    </div>
+        
+   
+
 </div>
 
 <div>

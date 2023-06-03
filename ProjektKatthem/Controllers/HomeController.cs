@@ -17,8 +17,18 @@ namespace ProjektKatthem.Controllers
         {
             return View();
         }
-
-        public IActionResult Privacy()
+        [Route("/om-oss")]
+        public IActionResult About()
+        {
+            return View();
+        }
+        [Route("/stod-oss")]
+        public IActionResult Support()
+        {
+            return View();
+        }
+        [Route("/kontakt")]
+        public IActionResult Contact()
         {
             return View();
         }

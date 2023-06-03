@@ -3,46 +3,48 @@
 @{
     ViewData["Title"] = "Details";
 }
+<div class="infocolor">
+<h1>Detaljer</h1>
+<div class="fontdetails" style="margin-bottom: 5px;">
+            <a asp-action='Edit' class="btn btn-light" asp-route-id='@Model.AdoptId'>Redigera</a> |
 
-<h1>Details</h1>
-
-<div>
-    <h4>Adopt</h4>
-    <hr />
+            <a asp-action='Delete' class="btn btn-danger" asp-route-id='@Model.AdoptId'>Radera</a>
+        </div>
+    <a asp-action="Index" class="btn btn-dark">Tillbaka</a>
+</div>
+<article class="details">
+    
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AdoptName)
+        <dt class = "col-sm-3">
+            Förnamn Efternamn:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-12">
             @Html.DisplayFor(model => model.AdoptName)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Email)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-12">
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Number)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-12">
             @Html.DisplayFor(model => model.Number)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Pickup)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-12">
             @Html.DisplayFor(model => model.Pickup)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cats)
+            Vald katt:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-12">
             @Html.DisplayFor(model => model.Cats.Name)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.AdoptId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+</article>
+

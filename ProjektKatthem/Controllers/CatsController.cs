@@ -9,6 +9,7 @@ using ProjektKatthem.Data;
 using ProjektKatthem.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProjektKatthem.Controllers
 {
@@ -51,6 +52,7 @@ namespace ProjektKatthem.Controllers
             return View(cats);
         }
 
+        [Authorize]
         // GET: Cats/Create
         public IActionResult Create()
         {
@@ -62,7 +64,7 @@ namespace ProjektKatthem.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Age,Breed,ImgFile,Adopted,Registered")] Cats cats)
+        public async Task<IActionResult> Create([Bind("Id,Name,Gender,Age,Breed,ImgFile,Adopted,Registered,Info")] Cats cats)
         {
             if (ModelState.IsValid)
             {
@@ -99,6 +101,7 @@ namespace ProjektKatthem.Controllers
             return View(cats);
         }
 
+        [Authorize]
         // GET: Cats/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -114,13 +117,13 @@ namespace ProjektKatthem.Controllers
             }
             return View(cats);
         }
-
+        [Authorize]
         // POST: Cats/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Age,Breed,ImgName,Adopted,Registered")] Cats cats)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Gender,Age,Breed,ImgName,Adopted,Registered,Info")] Cats cats)
         {
             if (id != cats.Id)
             {
@@ -128,9 +131,43 @@ namespace ProjektKatthem.Controllers
             }
 
             if (ModelState.IsValid)
+
             {
                 try
                 {
+                    if (cats.ImgFile != null)
+                {
+
+                    //Spara bilder till wwwroot
+                    string fileName = Path.GetFileNameWithoutExtension(cats.ImgFile.FileName);
+                    string extension = Path.GetExtension(cats.ImgFile.FileName);
+
+                    //Plockar bort mellanslag i filnam + lägger till timestamp
+                    cats.ImgName = fileName = fileName.Replace(" ", String.Empty) + DateTime.Now.ToString("yymmssfff") + extension;
+
+                    string path = Path.Combine(wwwRootPath + "/imagesupload", fileName);
+
+                    //Lagra Fil
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await cats.ImgFile.CopyToAsync(fileStream);
+                    }
+
+
+                }
+                else
+                {
+                    if(cats.ImgName != "") {
+                        cats.ImgName = cats.ImgName;
+
+                    } else {
+                        cats.ImgFile = null;
+                    }
+
+                    
+                }
+
+                
                     _context.Update(cats);
                     await _context.SaveChangesAsync();
                 }
@@ -149,7 +186,7 @@ namespace ProjektKatthem.Controllers
             }
             return View(cats);
         }
-
+        [Authorize]
         // GET: Cats/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -167,7 +204,7 @@ namespace ProjektKatthem.Controllers
 
             return View(cats);
         }
-
+        [Authorize]
         // POST: Cats/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -177,7 +214,7 @@ namespace ProjektKatthem.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Cats'  is null.");
             }
-            var cats = await _context.Cats.FindAsync(id);
+            var cats = await _context.Cats.Include(c => c.Adopt).FirstOrDefaultAsync(m => m.Id == id);
             if (cats != null)
             {
                 _context.Cats.Remove(cats);

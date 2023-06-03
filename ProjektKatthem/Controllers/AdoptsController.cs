@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using ProjektKatthem.Data;
 using ProjektKatthem.Models;
 
 namespace ProjektKatthem.Controllers
 {
-    public class AdoptsController : Controller
+	[Authorize]
+	public class AdoptsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
@@ -48,7 +51,8 @@ namespace ProjektKatthem.Controllers
         // GET: Adopts/Create
         public IActionResult Create()
         {
-            var catContext = _context.Cats.Where(c => c.Adopted == false)
+            var catContext = _context.Cats
+                .Where(c => c.Adopted == false)
                 .Select(c => c)
                 .ToList();
 
@@ -81,8 +85,6 @@ namespace ProjektKatthem.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            
-             
 
             ViewData["CatsId"] = new SelectList(_context.Cats, "Id", "Name"); 
        
@@ -102,7 +104,26 @@ namespace ProjektKatthem.Controllers
             {
                 return NotFound();
             }
-            ViewData["CatsId"] = new SelectList(_context.Cats, "Id", "Name", adopt.CatsId);
+
+           
+            //hämtar upp obokade katter
+            var catContext = _context.Cats
+                .Where(c => c.Adopted == false)
+                .Select(c => c)
+                .ToList();
+            //plockar upp den katt som också är vald i denna adoptionsbokning
+            var cat = _context.Cats
+           .Where(c => c.Id == adopt.CatsId)
+           .Select(c => c)
+           .FirstOrDefault();
+
+            //adderar till select-listan på edit
+            if(cat != null)
+            {
+                catContext.Add(cat);
+            }
+
+            ViewData["CatsId"] = new SelectList(catContext, "Id", "Name", adopt.CatsId);
             return View(adopt);
         }
 

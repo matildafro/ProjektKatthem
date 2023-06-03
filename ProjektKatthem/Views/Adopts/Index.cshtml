@@ -1,14 +1,18 @@
 ﻿@model IEnumerable<ProjektKatthem.Models.Adopt>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Adoption";
 }
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
+<div class="infocolor">
+<h1>Adoptioner</h1>
+<p>Här lägger du till adoptioner. Glöm inte att efter katten blivit upphämtad - radera katten från listan.
+    <br /><br />
+        <a asp-action="Create" class="btn btn-light">Lägg till adoption</a>
 </p>
+</div>
+
+    
+<article class="centeraligns">
 <table class="table">
     <thead>
         <tr>
@@ -25,7 +29,7 @@
                 @Html.DisplayNameFor(model => model.Pickup)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cats)
+                Katt:
             </th>
             <th></th>
         </tr>
@@ -49,11 +53,12 @@
                 @Html.DisplayFor(modelItem => item.Cats.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.AdoptId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AdoptId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AdoptId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.AdoptId" class="btn btn-primary">Redigera</a> |
+                    <a asp-action="Details" asp-route-id="@item.AdoptId" class="btn btn-success">Läs mer</a> |
+                    <a asp-action="Delete" asp-route-id="@item.AdoptId" class="btn btn-danger">Radera</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+</article>

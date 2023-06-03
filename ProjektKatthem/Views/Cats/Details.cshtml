@@ -1,54 +1,60 @@
-﻿@model ProjektKatthem.Models.Cats
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model ProjektKatthem.Models.Cats
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="infocolor">
+    <h1>@Html.DisplayFor(model => model.Name)</h1>
+    <p style="font-size: 20px;">Är du intresserad av @Html.DisplayFor(model => model.Name) eller någon av våra andra katter? Kontakta oss för att boka ett besök!</p>
 
-<div>
-    <h4>Cats</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Age)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Age)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Breed)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Breed)
-        </dd>
-        <dt class="col-sm-2">
-            Uploaded Image
-        </dt>
-        <dd class="col-sm-10">
-            <img decoding="async" src="@("~/imagesupload/"+Model.ImgName)" asp-append-version="true" width="200px" height="200px" />
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Adopted)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Adopted)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Registered)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Registered)
-        </dd>
-    </dl>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="fontdetails" style="margin-bottom: 5px;">
+            <a asp-action='Edit' class="btn btn-light" asp-route-id='@Model.Id'>Redigera</a> |
+
+            <a asp-action='Delete' class="btn btn-danger" asp-route-id='@Model.Id'>Radera</a>
+        </div>
+    }
+    <a asp-action="Index" class="btn btn-dark">Tillbaka</a> | <a asp-controller="Home" asp-action="Contact" class="btn btn-light">Kontakta oss </a>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<article class="details">
+    <div class="gridCats">
+        <div><img decoding="async" src="@("~/imagesupload/"+Model.ImgName)" asp-append-version="true" style="width:350px" /></div>
+        <div>
+            <i>Registrerad hos oss sedan: @Html.DisplayFor(model => model.Registered)</i>
+            <p style="font-size: 25px;">
+                <b>
+                    @if (Model.Adopted == false)
+                    {
+                        <span class="green">
+                            @Html.DisplayFor(model => model.Adopted)
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="booked">
+                            @Html.DisplayFor(model => model.Adopted)
+                        </span>
+                    }
+                    <br />
+                    @Html.DisplayFor(model => model.Name) är en @Html.DisplayFor(model => model.Age) årig @Html.DisplayFor(model => model.Gender)
+
+                </b>
+            </p>
+            <p>@Html.DisplayFor(model => model.Info)</p>
+            
+            
+            
+
+        </div>
+
+    </div>
+</article>
+
+
+

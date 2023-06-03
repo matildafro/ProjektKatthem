@@ -1,66 +1,68 @@
-﻿@model IEnumerable<ProjektKatthem.Models.Cats>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model IEnumerable<ProjektKatthem.Models.Cats>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="infocolor">
+	<h1>Våra katter</h1>
+    <p>
+        Många av våra katter har en sorglig historia i bagaget. Därför är det extra viktigt att hitta kärleksfulla och trygga hem som passar just dem. Vårt mål är alltid att de ska få stanna i sitt nya hem för resten av sitt liv.
+        För att hitta det bästa hemmet låter vi alltid våra vuxna katter provbo i den nya familjen för att se till att både katten och familjen trivs med varandra. I många fall har våra katter speciella behov och därför ställer vi många frågor vid första kontakten.
+        När en vuxen katt kommer till oss genomgår den snarast möjligt en veterinärundersökning i samband med kastrering, vaccinering och ID-märkning.
+    </p>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <a asp-action="Create" class="btn btn-light">Skapa ny katt</a>
+    }
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Age)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Breed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImgFile)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Adopted)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Registered)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Breed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImgFile)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Adopted)
-                
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Registered)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+@foreach (var item in Model)
+{
+    var information = item.Info.Substring(0, 150);
+
+    <div class="wrapper">
+   <article>
+        <div class="gridCats">
+                <div><img decoding="async" alt="Katt på katthemmet" src="@("~/imagesupload/"+item.ImgName)" asp-append-version="true" style="width:250px; height:300px;"/></div>
+            <div>
+                <h2>@Html.DisplayFor(modelItem => item.Name)
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <span class="editdeleteicon">
+                            <a asp-action='Edit' asp-route-id='@item.Id'><img src='img/edit.png' alt="Redigera"/></a>
+                                    &nbsp;
+
+                                <a asp-action='Delete' asp-route-id='@item.Id'><img src='img/delete.png' alt="Radera" /></a>
+                            </span>
+                            
+                        }
+                </h2>
+                    <p><b>@Html.DisplayFor(modelItem => item.Age) år &nbsp; &nbsp; @Html.DisplayFor(modelItem => item.Breed) &nbsp;&nbsp; @if (item.Adopted == false)
+                            {   
+                                <span class="green"><br>
+                                    @Html.DisplayFor(modelItem => item.Adopted)</span>
+                            } else
+                            {
+                                <span class="booked"><br>
+                                    @Html.DisplayFor(modelItem => item.Adopted)
+                                </span>
+                            }
+                        </b>
+                    </p>
+                    <p> @Html.DisplayFor(x => information)... <a class="readmore" asp-action="Details" asp-route-id="@item.Id">Läs mer </a></p>
+                    <br><br>
+                <i style="margin-top: 20px;">Registrerad hos oss sedan: @Html.DisplayFor(modelItem => item.Registered)</i>
+
+            </div>
+
+       </div>
+</article> 
+    </div>
 }
-    </tbody>
-</table>
+<button onclick="topFunction()" id="myBtn" title="Go to top">Tillbaka till toppen</button>
+
+<div><p style="color: #d9f2e6">*</p></div>

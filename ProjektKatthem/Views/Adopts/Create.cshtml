@@ -1,15 +1,15 @@
 ﻿@model ProjektKatthem.Models.Adopt
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Lägg till adoption";
 }
 
-<h1>Create</h1>
+<div class="infocolor">
+    <h1>Lägg till adoption</h1>
+    <a asp-action="Index" class="btn btn-dark">Tillbaka</a>
+</div>
 
-<h4>Adopt</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="edition">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -36,18 +36,15 @@
                 <label asp-for="CatsId" class="control-label"></label>
                 <select asp-for="CatsId" class="form-control" asp-items="ViewBag.CatsId"></select>
             </div>
-           
-            
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+
+
+        <div class="form-group" style="margin-top: 8px">
+            <input type="submit" value="Lägg till adoption" class="btn btn-success" />
+        </div>
         </form>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

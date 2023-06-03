@@ -1,8 +1,20 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿
+@{
+    ViewData["Title"] = "Startsida";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="infocolor">
+    <h1>Välkommen till Gröndals Katthem</h1>
+    <p>Gröndals Katthem är en ideell förening som omhändertar och omplacerar hemlösa och nödlidande katter i Stockholmsområdet. <br />Vi är helt beroende av gåvor från godhjärtade människor samt ideell arbetskraft.</p>
+    
 </div>
+
+<article class="details">
+    <p style="text-align: center">Gröndals Katthem har varit en verksamhet sedan 2018 och har idag hjälpt över 1000 katter att omplaceras till kärleksfulla hem. 
+        Vi är självklart medlemmar i Svenska Kattskyddsförbundet (SVEKATT) som är ett rikstäckande förbund som erkänner alla katters lika värde och rätt till ett gott liv. 
+        Det innebär bland annat att Gröndals Katthem har en no-kill-policy vilket innebär att vi aldrig avlivar katter för att de är skygga eller för dyra att vårda. 
+        Hos oss får varje katt chansen att visa sitt rätta jag i sin egen takt. <br /> Är du intresserad av att hjälpa en katt? <a asp-action="Contact"> Kontakta oss!</a> <br />
+        För att se vilka katter som finns på hemmet just nu, spana in <a asp-controller="Cats" asp-action="Index">våra katter</a>.
+    </p>
+    <img src="img/kattbilder.jpg" alt="Bild på tre olika katter"/>
+    </article>
